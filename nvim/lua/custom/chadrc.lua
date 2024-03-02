@@ -1,8 +1,8 @@
 ---@type ChadrcConfig
 local M = {}
 
-M.ui = { theme = 'tokyonight' }
+M.ui = require("custom.ui")
 M.plugins = "custom.plugins"
-M.ui.hl_override = require("custom.highlight")
+M.mappings = require("custom.mappings")
 
 return M

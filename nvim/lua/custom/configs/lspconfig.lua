@@ -26,7 +26,13 @@ lspconfig.rust_analyzer.setup({
   }
 })
 
-local servers = { "tsserver", "tailwindcss", "biome", "jsonls", "emmet_language_server", "cssls" }
+lspconfig.eslint.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = { "oxlint" }
+})
+
+local servers = { "tsserver", "tailwindcss", "biome", "jsonls", "emmet_language_server", "cssls", "intelephense"}
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup({

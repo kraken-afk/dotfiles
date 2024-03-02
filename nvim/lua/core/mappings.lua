@@ -5,7 +5,7 @@ local M = {}
 M.general = {
   i = {
     -- go to  beginning and end
-    ["<M-Left>"] = { "<Home>", "Beginning of line" },
+    ["<M-Left>"] = { "<Esc>^i", "Beginning of line" },
     ["<M-Right>"] = { "<End>", "End of line" },
 
     -- navigate within insert mode
@@ -16,10 +16,6 @@ M.general = {
   },
 
   n = {
- -- go to  beginning and end
-    ["<M-Left>"] = { "<Home>", "Beginning of line" },
-    ["<M-Right>"] = { "<End>", "End of line" },
-
     ["<Esc>"] = { "<cmd> noh <CR>", "Clear highlights" },
     -- switch between windows
     ["<C-h>"] = { "<C-w>h", "Window left" },
@@ -67,9 +63,6 @@ M.general = {
     ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
     ["<"] = { "<gv", "Indent line" },
     [">"] = { ">gv", "Indent line" },
- -- go to  beginning and end
-    ["<M-Left>"] = { "<Home>", "Beginning of line" },
-    ["<M-Right>"] = { "<End>", "End of line" },
   },
 
   x = {

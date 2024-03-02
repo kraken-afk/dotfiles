@@ -4,9 +4,9 @@ import = [
 shell = "/bin/zsh"
 
 [window]
-padding = { x = 8, y = 8 }
+# padding = { x = 8, y = 8 }
 title = ""
-dynamic_title = false
+dynamic_title = true
 
 [font]
 normal = { family = "JetBrainsMono Nerd Font Propo" }

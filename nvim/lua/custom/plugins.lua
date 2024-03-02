@@ -12,7 +12,9 @@ local plugins = {
         "biome",
         "json-lsp",
         "emmet-language-server",
-        "css-lsp"
+        "css-lsp",
+        "intelephense",
+        "eslint-lsp"
       }
     }
   },
@@ -29,6 +31,24 @@ local plugins = {
     opts = function()
       return require("custom.configs.null-ls")
     end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "lua",
+        "tsx",
+        "javascript",
+        "html",
+        "css",
+        "rust",
+        "c",
+        "json",
+        "cmake",
+        "toml",
+        "yaml"
+      }
+    }
   },
   {
     'wakatime/vim-wakatime',
