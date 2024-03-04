@@ -21,6 +21,9 @@ lspconfig.rust_analyzer.setup({
     ['rust_analyzer'] = {
       cargo = {
         allFeatures = true,
+      },
+      diagnostics = {
+        enable = true,
       }
     }
   }
@@ -32,7 +35,7 @@ lspconfig.eslint.setup({
   cmd = { "oxlint" }
 })
 
-local servers = { "tsserver", "tailwindcss", "biome", "jsonls", "emmet_language_server", "cssls", "intelephense"}
+local servers = { "tsserver", "tailwindcss", "biome", "jsonls", "emmet_language_server", "cssls", "intelephense" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup({

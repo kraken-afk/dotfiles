@@ -3,44 +3,45 @@ local ui = {}
 
 ui.hl_override = {
   NvDashAscii = { bg = "NONE", fg = "cyan" },
-  NvDashButtons = { bg = "NONE", fg = "teal" }
+  NvDashButtons = { bg = "NONE", fg = "teal" },
+  NvimTreeFolderIcon = { fg = "white" },
+  NvimTreeFolderArrowOpen = { fg = "white" },
+  NvimTreeFolderName = { fg = "white" },
+  NvimTreeOpenedFolderName = { fg = "white" },
 }
 
 ui.statusline = {
-  separator_style = "round",
+  theme = "minimal"
 }
 
-ui.theme = "tokyonight"
+ui.theme = "tokyodark"
 
 ui.telescope = { style = "bordered" }
 
 ui.nvdash = {
   load_on_startup = true,
   header = {
-    [[                                                ]],
-    [[                                          _.oo. ]],
-    [[                  _.u[[/;:,.         .odMMMMMM' ]],
-    [[               .o888UU[[[/;:-.  .o@P^    MMM^   ]],
-    [[              oN88888UU[[[/;::-.        dP^     ]],
-    [[             dNMMNN888UU[[[/;:--.   .o@P^       ]],
-    [[            ,MMMMMMN888UU[[/;::-. o@^           ]],
-    [[            NNMMMNN888UU[[[/~.o@P^              ]],
-    [[            888888888UU[[[/o@^-..               ]],
-    [[           oI8888UU[[[/o@P^:--..                ]],
-    [[        .@^  YUU[[[/o@^;::---..                 ]],
-    [[      oMP     ^/o@P^;:::---..                   ]],
-    [[   .dMMM    .o@^ ^;::---...                     ]],
-    [[  dMMMMMMM@^`       `^^^^                       ]],
-    [[ YMMMUP^                                        ]],
-    [[  ^^                                            ]],
-    [[                                                ]],
+    " ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗",
+    " ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║",
+    " ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║",
+    " ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║",
+    " ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║",
+    " ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝",
+
   },
   buttons = {
-    { "  Find File", "Spc f f", "Telescope find_files" },
-    { "󰈚  Recent Files", "Spc f o", "Telescope oldfiles" },
-    { "󰈭  Find Word", "Spc f w", "Telescope live_grep" },
-    { "  Bookmarks", "Spc m a", "Telescope marks" },
+    -- { "  Find File", "Spc f f", "Telescope find_files" },
+    -- { "󰈚  Recent Files", "Spc f o", "Telescope oldfiles" },
+    -- { "󰈭  Find Word", "Spc f w", "Telescope live_grep" },
+    -- { "  Bookmarks", "Spc m a", "Telescope marks" },
   }
+}
+
+ui.tabufline = {
+  overriden_modules = function(modules)
+    table.insert(modules, modules[1])
+    table.remove(modules, 1)
+  end,
 }
 
 return ui
