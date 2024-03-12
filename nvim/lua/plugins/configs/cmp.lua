@@ -1,4 +1,31 @@
 local cmp = require "cmp"
+local kind_icons = {
+	Class = " ",
+	Color = " ",
+	Constant = "ﲀ ",
+	Constructor = " ",
+	Enum = "練",
+	EnumMember = " ",
+	Event = " ",
+	Field = " ",
+	File = "",
+	Folder = " ",
+	Function = " ",
+	Interface = "ﰮ ",
+	Keyword = " ",
+	Method = " ",
+	Module = " ",
+	Operator = "",
+	Property = " ",
+	Reference = " ",
+	Snippet = " ",
+	Struct = " ",
+	Text = " ",
+	TypeParameter = " ",
+	Unit = "塞",
+	Value = " ",
+	Variable = " ",
+}
 
 dofile(vim.g.base46_cache .. "cmp")
 
@@ -15,8 +42,8 @@ local formatting_style = {
   fields = field_arrangement[cmp_style] or { "abbr", "kind", "menu" },
 
   format = function(_, item)
-    local icons = require "nvchad.icons.lspkind"
-    local icon = (cmp_ui.icons and icons[item.kind]) or ""
+    -- local icons = require "nvchad.icons.lspkind"
+    local icon = (cmp_ui.icons and kind_icons[item.kind]) or ""
 
     if cmp_style == "atom" or cmp_style == "atom_colored" then
       icon = " " .. icon .. " "

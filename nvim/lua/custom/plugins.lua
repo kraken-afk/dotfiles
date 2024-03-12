@@ -14,7 +14,8 @@ local plugins = {
         "emmet-language-server",
         "css-lsp",
         "intelephense",
-        "eslint-lsp"
+        "eslint-lsp",
+        "taplo",
       }
     }
   },
@@ -44,14 +45,17 @@ local plugins = {
         "lua",
         "tsx",
         "javascript",
+        "typescript",
         "html",
         "css",
         "rust",
         "c",
         "json",
+        "jsonc",
         "cmake",
         "toml",
-        "yaml"
+        "yaml",
+        "php",
       }
     }
   },
@@ -81,6 +85,54 @@ local plugins = {
       local M = require("plugins.configs.cmp")
       table.insert(M.sources, { name = "crates" })
       return M
+    end
+  },
+  {
+    "lvimuser/lsp-inlayhints.nvim",
+  },
+  {
+    'simrat39/rust-tools.nvim',
+    ft = "rust",
+    dependencies = "neovim/nvim-lspconfig",
+    opts = function()
+      return require("custom.configs.rust-tools")
+    end,
+    config = function(_, opts)
+      require("rust-tools").setup(opts)
+    end,
+  },
+  {
+    "booperlv/nvim-gomove",
+    lazy = false,
+    config = function()
+      require("gomove").setup {
+        map_defaults = false,
+        undojoin = false
+      }
+    end,
+  },
+  {
+    "MunifTanjim/nui.nvim"
+  },
+  {
+    'stevearc/dressing.nvim',
+    lazy = false,
+    opts = {},
+    config = function()
+      require("dressing").setup()
+    end
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    ft = {
+      'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue', 'tsx', 'jsx', 'rescript',
+      'xml',
+      'php',
+      'markdown',
+      'astro', 'glimmer', 'handlebars', 'hbs'
+    },
+    config = function()
+      require('nvim-ts-autotag').setup()
     end
   }
 }

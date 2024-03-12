@@ -4,17 +4,17 @@ local ui = {}
 ui.hl_override = {
   NvDashAscii = { bg = "NONE", fg = "cyan" },
   NvDashButtons = { bg = "NONE", fg = "teal" },
-  NvimTreeFolderIcon = { fg = "white" },
+  NvimTreeFolderIcon = { fg = "vibrant_green" },
   NvimTreeFolderArrowOpen = { fg = "white" },
   NvimTreeFolderName = { fg = "white" },
-  NvimTreeOpenedFolderName = { fg = "white" },
+  NvimTreeOpenedFolderName = { fg = "baby_pink" },
 }
 
 ui.statusline = {
   theme = "minimal"
 }
 
-ui.theme = "tokyodark"
+ui.theme = "tokyonight"
 
 ui.telescope = { style = "bordered" }
 

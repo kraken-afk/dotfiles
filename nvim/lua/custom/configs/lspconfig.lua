@@ -12,22 +12,22 @@ lspconfig.clangd.setup({
   capabilities = capabilities
 })
 
-lspconfig.rust_analyzer.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = { "rust" },
-  root_dir = util.root_pattern("Cargo.toml"),
-  settings = {
-    ['rust_analyzer'] = {
-      cargo = {
-        allFeatures = true,
-      },
-      diagnostics = {
-        enable = true,
-      }
-    }
-  }
-})
+-- lspconfig.rust_analyzer.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   filetypes = { "rust" },
+--   root_dir = util.root_pattern("Cargo.toml"),
+--   settings = {
+--     ['rust_analyzer'] = {
+--       cargo = {
+--         allFeatures = true,
+--       },
+--       diagnostics = {
+--         enable = true,
+--       },
+--     }
+--   }
+-- })
 
 lspconfig.eslint.setup({
   on_attach = on_attach,
@@ -35,7 +35,7 @@ lspconfig.eslint.setup({
   cmd = { "oxlint" }
 })
 
-local servers = { "tsserver", "tailwindcss", "biome", "jsonls", "emmet_language_server", "cssls", "intelephense" }
+local servers = { "tsserver", "tailwindcss", "biome", "jsonls", "emmet_language_server", "cssls", "intelephense", "taplo" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup({
