@@ -3,6 +3,7 @@ local plugins = {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
+        "lua-language-server",
         "clangd",
         "clang-format",
         "rust-analyzer",
@@ -134,7 +135,7 @@ local plugins = {
     config = function()
       require('nvim-ts-autotag').setup()
     end
-  }
+  },
 }
 
 return plugins

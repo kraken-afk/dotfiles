@@ -29,6 +29,7 @@ mappings.general = {
       end,
       "Close all buffers",
     },
+    ["a"] = { "za", "Fold current buffer"}
   },
   t = {
     ["<C-Left>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>h", true, true, true), "Window left" },

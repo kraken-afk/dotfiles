@@ -50,6 +50,11 @@ opt.updatetime = 250
 opt.whichwrap:append "<>[]hl"
 opt.wrap = false
 
+-- Foldable settings
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldlevelstart = 99
+
 g.mapleader = " "
 
 -- disable some default providers
