@@ -17,7 +17,8 @@ return {
         "intelephense",
         "eslint-lsp",
         "taplo",
-        "html"
+        "html",
+        "deno"
       },
       PATH = "skip",
 
@@ -46,5 +47,18 @@ return {
   {
     'wakatime/vim-wakatime',
     lazy = false
+  },
+  -- {
+  --   'MeanderingProgrammer/markdown.nvim',
+  --   ft = { "markdown" },
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  --   config = function()
+  --     require('render-markdown').setup({})
+  --   end,
+  -- },
+  {
+    "alec-gibson/nvim-tetris",
+    enable = true,
+    lazy = false,
   },
 }

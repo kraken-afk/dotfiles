@@ -7,11 +7,16 @@ map("i", "<M-Right>", "<End>", { desc = "End of line" })
 
 map("v", "<M-Left>", "<Home>", { desc = "Beginning of line" })
 map("v", "<M-Right>", "<End>", { desc = "End of line" })
+map("v", "<M-h>", "<Home>", { desc = "Beginning of line" })
+map("v", "<M-l>", "<End>", { desc = "End of line" })
 map("v", "<M-Up>", "<Plug>GoVSMUp", { desc = "Move current block ap" })
 map("v", "<M-Down>", "<Plug>GoVSMDown", { desc = "Move current block down" })
 
 map("n", "<M-Left>", "<Home>", { desc = "Beginning of line" })
 map("n", "<M-Right>", "<End>", { desc = "End of line" })
+map("n", "<M-h>", "<Home>", { desc = "Beginning of line" })
+map("n", "<M-l>", "<End>", { desc = "End of line" })
+
 map("n", "<C-a>", "gg<Home>vG<End>", {})
 map("n", "<C-Left>", "<C-w>h", { desc = "Window left" })
 map("n", "<C-Right>", "<C-w>l", { desc = "Window right" })
