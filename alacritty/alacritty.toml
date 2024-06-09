@@ -1,12 +1,16 @@
-import = [
-  "~/.config/alacritty/themes/tokyonight.toml"
-]
+import = ["~/.config/alacritty/themes/tokyonight.toml"]
+
 shell = "/bin/zsh"
 
+[env]
+term = "xterm-256color"
+
 [window]
-# padding = { x = 8, y = 8 }
-title = ""
+padding = { x = 0, y = 0 }
+# dynamic_padding = true
+# title = ""
 dynamic_title = true
+# opacity = 0.86
 
 [font]
 normal = { family = "JetBrainsMono Nerd Font Propo" }
@@ -20,4 +24,3 @@ osc52 = "CopyPaste"
 
 [selection]
 save_to_clipboard = true
-
