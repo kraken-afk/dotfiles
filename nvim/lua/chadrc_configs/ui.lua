@@ -1,4 +1,4 @@
----@type UIConfig
+---@class UIConfig
 local M = {}
 
 M.hl_override = {
@@ -11,7 +11,8 @@ M.hl_override = {
 }
 
 M.statusline = {
-  theme = "minimal"
+  theme = "minimal",
+  separator_style = "round",
 }
 
 M.transparency = true
@@ -46,6 +47,15 @@ M.tabufline = {
   lazyload = true,
   order = { "buffers", "tabs" },
   modules = nil
+}
+
+M.term = {
+  float = {
+    row = 0.1,
+    col = 0.15,
+    width = 0.65,
+    height = 0.7,
+  },
 }
 
 return M

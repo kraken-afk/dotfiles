@@ -55,7 +55,13 @@ return {
         "toml",
         "yaml",
         "php",
-        "markdown"
+        "markdown",
+        "dart",
+        "scss",
+        "haskell",
+        "go",
+        "gomod",
+        "gosum",
       }
 
       return M

@@ -25,7 +25,17 @@ for type, icon in pairs(signs) do
 end
 
 local lspconfig = require "lspconfig"
-local servers = { "tailwindcss", "biome", "emmet_language_server", "cssls", "intelephense", "taplo", "lua_ls" }
+local servers = {
+  "tailwindcss",
+  "biome",
+  "emmet_language_server",
+  "cssls", "intelephense",
+  "taplo",
+  "lua_ls",
+  "dartls",
+  "somesass_ls",
+  -- "hls"
+}
 
 -- Typescript
 lspconfig.tsserver.setup {

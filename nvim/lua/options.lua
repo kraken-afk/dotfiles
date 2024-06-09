@@ -1,10 +1,10 @@
 require "nvchad.options"
 
-local opt       = vim.opt
-local g         = vim.g
-local api       = vim.api
-local wo        = vim.wo
-local o         = vim.o
+local opt = vim.opt
+local g   = vim.g
+local api = vim.api
+local wo  = vim.wo
+local o   = vim.o
 
 -- Format on save
 api.nvim_create_autocmd("BufWritePre", {

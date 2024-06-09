@@ -18,7 +18,9 @@ return {
         "eslint-lsp",
         "taplo",
         "html",
-        "deno"
+        "deno",
+        "some-sass-language-server",
+        "haskell-language-server"
       },
       PATH = "skip",
 
