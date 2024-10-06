@@ -1,3 +1,7 @@
+-- load defaults i.e lua_lsp
+-- require("nvchad.configs.lspconfig").defaults()
+
+local nvlsp = require "nvchad.configs.lspconfig"
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
@@ -29,16 +33,34 @@ local servers = {
   "tailwindcss",
   "biome",
   "emmet_language_server",
-  "cssls", "intelephense",
+  "cssls",
+  "intelephense",
   "taplo",
   "lua_ls",
   "dartls",
   "somesass_ls",
-  -- "hls"
+  "eslint",
+}
+
+-- Emmet HTML
+lspconfig.emmet_language_server.setup {
+  filetypes = {
+    "css",
+    "eruby",
+    "html",
+    "htmldjango",
+    "javascriptreact",
+    "less",
+    "pug",
+    "sass",
+    "scss",
+    "typescriptreact",
+    "php",
+  },
 }
 
 -- Typescript
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
@@ -55,32 +77,62 @@ lspconfig.denols.setup {
 }
 
 -- clang
-lspconfig.clangd.setup({
+lspconfig.clangd.setup {
   on_attach = function(client, bufnr)
     client.server_capabilities.signatureHelpProvider = false
     on_attach(client, bufnr)
   end,
-  capabilities = capabilities
-})
+  capabilities = capabilities,
+}
 
 -- jsonls
-lspconfig.jsonls.setup({
+lspconfig.jsonls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "json", "jsonc" },
   settings = {
     json = {
-      schemas = require('schemastore').json.schemas(),
+      schemas = require("schemastore").json.schemas(),
       validate = { enable = true },
-    }
-  }
-})
+    },
+  },
+}
+
+-- gopls
+require("lspconfig").gopls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = { "gopls" },
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+  settings = {
+    gopls = {
+      completeUnimported = true,
+      usePlaceholders = true,
+      analyses = {
+        unreachable = true,
+        unusedparams = true,
+      },
+      codelenses = {
+        generate = true,
+        gc_details = true,
+        test = true,
+        tidy = true,
+      },
+      -- hints = {
+      --   assignVariableTypes = true,
+      --   constantValues = true,
+      --   rangeVariableTypes = true,
+      -- }
+    },
+  },
+}
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
-    on_attach = on_attach,
-    on_init = on_init,
-    capabilities = capabilities,
+    on_attach = nvlsp.on_attach,
+    on_init = nvlsp.on_init,
+    capabilities = nvlsp.capabilities,
   }
 end

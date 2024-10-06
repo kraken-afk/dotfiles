@@ -1,12 +1,13 @@
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
-    -- css = { "prettier" },
-    -- html = { "prettier" },
-    javascript = { "biome" },
-    typescript = { "biome" },
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+    typescript = { "prettierd", "prettier", stop_after_first = true },
     json = { "biome" },
-    -- rust = { "cargo fmt" }
+    go = { "gofmt" },
+    css = { "prettier" },
+    html = { "prettier" },
+    rust = { "cargo fmt" },
   },
 
   format_on_save = {
@@ -16,4 +17,4 @@ local options = {
   },
 }
 
-require("conform").setup(options)
+return options

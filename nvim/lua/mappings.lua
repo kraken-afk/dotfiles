@@ -25,7 +25,9 @@ map("n", "<C-Up>", "<C-w>k", { desc = "Window up" })
 map("n", "<M-Up>", "<Plug>GoNSMUp", { desc = "Move current line up" })
 map("n", "<M-Down>", "<Plug>GoNSMDown", { desc = "Move current line down" })
 map("n", "vv", "viw", { desc = "Select current word" })
-map("n", "<leader>kx", function() require("nvchad.tabufline").closeAllBufs() end, { desc = "Close all buffers" })
+map("n", "<leader>kx", function()
+  require("nvchad.tabufline").closeAllBufs()
+end, { desc = "Close all buffers" })
 map("n", "a", "za", { desc = "Fold current buffer" })
 
 map("t", "<C-Left>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>h", true, true, true), { desc = "Window left" })
@@ -33,3 +35,15 @@ map("t", "<C-Right>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>l", true, 
 map("t", "<C-Down>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>j", true, true, true), { desc = "Window down" })
 map("t", "<C-Up>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>k", true, true, true), { desc = "Window up" })
 
+map({ "n", "t" }, "<A-i>", function()
+  require("nvchad.term").toggle {
+    pos = "float",
+    id = "floatTerm",
+    float_opts = {
+      row = 0.1,
+      col = 0.15,
+      width = 0.7,
+      height = 0.7,
+    },
+  }
+end, { desc = "terminal toggle floating term" })

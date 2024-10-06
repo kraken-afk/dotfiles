@@ -6,8 +6,8 @@ return {
         "lua-language-server",
         "clangd",
         "clang-format",
-        "rust-analyzer",
-        "typescript-language-server",
+        "rust-analyzer",              
+        "typescript-language-server", 
         "tailwindcss-language-server",
         "oxlint",
         "biome",
@@ -20,7 +20,10 @@ return {
         "html",
         "deno",
         "some-sass-language-server",
-        "haskell-language-server"
+        "haskell-language-server",
+        "gopls",
+        "eslint",
+        "prettier",
       },
       PATH = "skip",
 
@@ -44,11 +47,11 @@ return {
       },
 
       max_concurrent_installers = 10,
-    }
+    },
   },
   {
-    'wakatime/vim-wakatime',
-    lazy = false
+    "wakatime/vim-wakatime",
+    lazy = false,
   },
   -- {
   --   'MeanderingProgrammer/markdown.nvim',
@@ -60,7 +63,7 @@ return {
   -- },
   {
     "alec-gibson/nvim-tetris",
-    enable = true,
+    enabled = true,
     lazy = false,
   },
 }

@@ -1,3 +1,6 @@
+-- local on_attach = require("nvchad.configs.lspconfig").on_attach
+-- local capabilities = require("nvchad.configs.lspconfig").capabilities
+
 return {
   "ray-x/go.nvim",
   dependencies = { -- optional packages
@@ -10,5 +13,6 @@ return {
   end,
   event = { "CmdlineEnter" },
   ft = { "go", 'gomod' },
-  build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+  build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+  -- enabled = false,
 }
