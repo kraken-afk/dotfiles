@@ -39,7 +39,7 @@ local servers = {
   "lua_ls",
   "dartls",
   "somesass_ls",
-  "eslint",
+  -- "eslint",
 }
 
 -- Emmet HTML
