@@ -62,6 +62,10 @@ return {
         "go",
         "gomod",
         "gosum",
+        "python",
+        "prisma",
+        "glsl",
+        "astro",
       }
 
       return M
@@ -179,4 +183,17 @@ return {
       }
     end,
   },
+  -- {
+  --   "MysticalDevil/inlay-hints.nvim",
+  --   event = "LspAttach",
+  --   dependencies = { "neovim/nvim-lspconfig" },
+  --   config = function()
+  --     require("inlay-hints").setup()
+  --   end,
+  -- },
+  -- {
+  --   "chrisgrieser/nvim-lsp-endhints",
+  --   event = "LspAttach",
+  --   opts = {}, -- required, even if empty
+  -- },
 }

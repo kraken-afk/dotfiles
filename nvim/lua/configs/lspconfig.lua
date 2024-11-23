@@ -1,32 +1,7 @@
--- load defaults i.e lua_lsp
--- require("nvchad.configs.lspconfig").defaults()
-
 local nvlsp = require "nvchad.configs.lspconfig"
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
-local border = {
-  { "╭", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "╮", "FloatBorder" },
-  { "│", "FloatBorder" },
-  { "╯", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "╰", "FloatBorder" },
-  { "│", "FloatBorder" },
-}
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  opts.border = border
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
-
-local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
 
 local lspconfig = require "lspconfig"
 local servers = {
@@ -39,7 +14,9 @@ local servers = {
   "lua_ls",
   "dartls",
   "somesass_ls",
-  -- "eslint",
+  "prismals",
+  "glsl_analyzer",
+  "astro",
 }
 
 -- Emmet HTML
@@ -56,6 +33,7 @@ lspconfig.emmet_language_server.setup {
     "scss",
     "typescriptreact",
     "php",
+    "astro",
   },
 }
 
@@ -64,7 +42,17 @@ lspconfig.ts_ls.setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "node_modules"),
+  root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
+  single_file_support = false,
+  filetypes = {
+    "astro",
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+  },
 }
 
 -- Deno
@@ -72,8 +60,8 @@ lspconfig.denols.setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
+  root_dir = lspconfig.util.root_pattern("deno.json", "import_map.json", "deno.jsonc"),
   single_file_support = false,
-  root_dir = lspconfig.util.root_pattern("deno.json", "import_map.json"),
 }
 
 -- clang
@@ -83,11 +71,13 @@ lspconfig.clangd.setup {
     on_attach(client, bufnr)
   end,
   capabilities = capabilities,
+  on_init = nvlsp.on_init,
 }
 
 -- jsonls
 lspconfig.jsonls.setup {
   on_attach = on_attach,
+  on_init = nvlsp.on_init,
   capabilities = capabilities,
   filetypes = { "json", "jsonc" },
   settings = {
@@ -101,6 +91,7 @@ lspconfig.jsonls.setup {
 -- gopls
 require("lspconfig").gopls.setup {
   on_attach = on_attach,
+  on_init = nvlsp.on_init,
   capabilities = capabilities,
   cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
@@ -124,6 +115,33 @@ require("lspconfig").gopls.setup {
       --   constantValues = true,
       --   rangeVariableTypes = true,
       -- }
+    },
+  },
+}
+
+-- Python
+require("lspconfig").ruff.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  on_init = nvlsp.on_init,
+  init_options = {
+    settings = {
+      logLevel = "debug",
+      inlayHints = false,
+    },
+  },
+}
+
+require("lspconfig").pylyzer.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  on_init = nvlsp.on_init,
+  settings = {
+    python = {
+      checkOnType = true,
+      diagnostics = true,
+      inlayHints = false,
+      smartCompletion = true,
     },
   },
 }

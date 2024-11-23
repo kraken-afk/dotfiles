@@ -1,12 +1,38 @@
 local M = {}
 
 M.hl_override = {
-  -- NvDashAscii = { bg = "NONE", fg = "purple" },
-  -- NvDashButtons = { bg = "NONE", fg = "teal" },
   NvimTreeFolderIcon = { fg = "vibrant_green" },
   NvimTreeFolderArrowOpen = { fg = "white" },
   NvimTreeFolderName = { fg = "blue" },
-  NvimTreeOpenedFolderName = { fg = "baby_pink" },
+  TelescopePromptTitle = {
+    fg = "white",
+    bg = "NONE",
+  },
+  TelescopePreviewTitle = {
+    fg = "red",
+    bg = "NONE",
+  },
+
+  TelescopePromptPrefix = {
+    fg = "vibrant_red",
+    bg = "NONE",
+  },
+  TelescopeResultsTitle = {
+    fg = "red",
+    bg = "NONE",
+  },
+  DiagnosticWarn = {
+    fg = "yellow",
+    bg = { "yellow", "black", 90 },
+  },
+  DiagnosticError = {
+    fg = "red",
+    bg = { "red", "black", 90 },
+  },
+  DiagnosticHint = {
+    fg = "purple",
+    bg = { "red", "black", 90 },
+  },
 }
 
 M.transparency = true

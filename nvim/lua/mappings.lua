@@ -9,7 +9,7 @@ map("v", "<M-Left>", "<Home>", { desc = "Beginning of line" })
 map("v", "<M-Right>", "<End>", { desc = "End of line" })
 map("v", "<M-h>", "<Home>", { desc = "Beginning of line" })
 map("v", "<M-l>", "<End>", { desc = "End of line" })
-map("v", "<M-Up>", "<Plug>GoVSMUp", { desc = "Move current block ap" })
+map("v", "<M-Up>", "<Plug>GoVSMUp", { desc = "Move current block up" })
 map("v", "<M-Down>", "<Plug>GoVSMDown", { desc = "Move current block down" })
 
 map("n", "<M-Left>", "<Home>", { desc = "Beginning of line" })

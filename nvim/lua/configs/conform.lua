@@ -3,6 +3,7 @@ local options = {
     lua = { "stylua" },
     javascript = { "biome" },
     typescript = { "biome" },
+    astro = { "biome" },
     json = { "biome" },
     go = { "gofmt" },
     css = { "prettier" },
