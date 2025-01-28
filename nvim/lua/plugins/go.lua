@@ -12,7 +12,7 @@ return {
     require("go").setup()
   end,
   event = { "CmdlineEnter" },
-  ft = { "go", 'gomod' },
+  ft = { "go", "gomod" },
   build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   -- enabled = false,
 }

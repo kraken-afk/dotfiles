@@ -11,7 +11,15 @@ M.tabufline = {
 M.statusline = {
   theme = "minimal",
   separator_style = "block",
-  order = { "%=", "lsp_msg", "%=", "diagnostics", "mode", "cursor" },
+  order = {
+    "%=",
+    "lsp_msg",
+    "%=",
+    -- "file",
+    "diagnostics",
+    "mode",
+    "cursor",
+  },
 }
 
 M.format_colors = {

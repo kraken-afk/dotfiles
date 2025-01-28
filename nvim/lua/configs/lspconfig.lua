@@ -6,7 +6,8 @@ local capabilities = require("nvchad.configs.lspconfig").capabilities
 local lspconfig = require "lspconfig"
 local servers = {
   "tailwindcss",
-  "biome",
+  -- "biome",
+  "eslint",
   "emmet_language_server",
   "cssls",
   "intelephense",
@@ -17,6 +18,7 @@ local servers = {
   "prismals",
   "glsl_analyzer",
   "astro",
+  "basedpyright",
 }
 
 -- Emmet HTML
@@ -132,19 +134,19 @@ require("lspconfig").ruff.setup {
   },
 }
 
-require("lspconfig").pylyzer.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  on_init = nvlsp.on_init,
-  settings = {
-    python = {
-      checkOnType = true,
-      diagnostics = true,
-      inlayHints = false,
-      smartCompletion = true,
-    },
-  },
-}
+-- require("lspconfig").pylyzer.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   on_init = nvlsp.on_init,
+--   settings = {
+--     python = {
+--       checkOnType = true,
+--       diagnostics = true,
+--       inlayHints = false,
+--       smartCompletion = true,
+--     },
+--   },
+-- }
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
