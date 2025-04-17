@@ -1,5 +1,37 @@
 return {
   {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy", -- Or `LspAttach`
+    priority = 1000, -- needs to be loaded in first
+    enabled = false,
+    config = function()
+      require("tiny-inline-diagnostic").setup {
+        preset = "simple",
+        options = {},
+      }
+    end,
+  },
+  {
+    "chrisgrieser/nvim-lsp-endhints",
+    enabled = false,
+    event = "LspAttach",
+    opts = {}, -- required, even if empty
+  },
+  {
+    "stevearc/conform.nvim",
+    event = "BufWritePre",
+    opts = require "configs.conform",
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    cmd = "Telescope",
+    opts = function()
+      return require "configs.telescope"
+    end,
+  },
+
+  {
     "neovim/nvim-lspconfig",
     config = function()
       require("nvchad.configs.lspconfig").defaults()
@@ -7,7 +39,7 @@ return {
     end,
     opts = {
       inlay_hints = {
-        enabled = true,
+        enabled = false,
       },
     },
   },
@@ -66,6 +98,7 @@ return {
         "prisma",
         "glsl",
         "astro",
+        "nix",
       }
 
       return M
@@ -116,7 +149,6 @@ return {
   },
   {
     "mg979/vim-visual-multi",
-    -- enabled = false,
     init = function()
       vim.g.VM_default_mappings = 0
       vim.g.VM_maps = {
@@ -183,17 +215,4 @@ return {
       }
     end,
   },
-  -- {
-  --   "MysticalDevil/inlay-hints.nvim",
-  --   event = "LspAttach",
-  --   dependencies = { "neovim/nvim-lspconfig" },
-  --   config = function()
-  --     require("inlay-hints").setup()
-  --   end,
-  -- },
-  -- {
-  --   "chrisgrieser/nvim-lsp-endhints",
-  --   event = "LspAttach",
-  --   opts = {}, -- required, even if empty
-  -- },
 }

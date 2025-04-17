@@ -1,6 +1,7 @@
 dofile(vim.g.base46_cache .. "cmp")
 
 local cmp = require "cmp"
+local types = require "cmp.types"
 
 local options = {
   completion = { completeopt = "menu,menuone" },
@@ -9,6 +10,42 @@ local options = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
     end,
+  },
+
+  sorting = {
+
+    comparators = {
+      -- Custom comparator with highest priority for fields, local variables, and functions
+      function(entry1, entry2)
+        local kind1 = entry1:get_kind()
+        local kind2 = entry2:get_kind()
+
+        local orderMap = {
+          [types.lsp.CompletionItemKind.Field] = 1, -- Highest priority
+          [types.lsp.CompletionItemKind.Variable] = 1,
+          [types.lsp.CompletionItemKind.Function] = 1,
+          [types.lsp.CompletionItemKind.Module] = 2,
+          [types.lsp.CompletionItemKind.Class] = 2,
+          [types.lsp.CompletionItemKind.Snippet] = 3, -- Lowest priority
+        }
+
+        local val1 = orderMap[kind1] or 3
+        local val2 = orderMap[kind2] or 3
+
+        if val1 ~= val2 then
+          return val1 < val2
+        end
+      end,
+
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.locality,
+      cmp.config.compare.kind,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
   },
 
   mapping = {

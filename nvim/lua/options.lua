@@ -18,6 +18,8 @@ api.nvim_create_autocmd("BufWritePre", {
 o.termguicolors = true
 api.nvim_set_hl(0, "CurSearch", { bg = "#7aa2f7", fg = "#1a1b26" })
 
+vim.diagnostic.config { virtual_text = false }
+
 -- Foldable settings
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"

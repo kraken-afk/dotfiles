@@ -5,7 +5,8 @@
 local M = {}
 
 M.ui = require "chadrc_configs.ui"
-M.base46 = require "chadrc_configs.theme"
+M.base46 = require "chadrc_configs.base46"
+
 M.nvdash = {
   load_on_startup = true,
 }

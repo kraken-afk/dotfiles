@@ -2,12 +2,13 @@ local nvlsp = require "nvchad.configs.lspconfig"
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
+local utils = require "libs.utils"
 
 local lspconfig = require "lspconfig"
 local servers = {
   "tailwindcss",
-  -- "biome",
-  "eslint",
+  "biome",
+  -- "eslint",
   "emmet_language_server",
   "cssls",
   "intelephense",
@@ -18,7 +19,6 @@ local servers = {
   "prismals",
   "glsl_analyzer",
   "astro",
-  "basedpyright",
 }
 
 -- Emmet HTML
@@ -37,6 +37,15 @@ lspconfig.emmet_language_server.setup {
     "php",
     "astro",
   },
+}
+
+-- Nix
+lspconfig.nil_ls.setup {
+  cmd = { "nil" },
+  filetypes = { "nix" },
+  single_file_support = true,
+  root_dir = lspconfig.util.root_pattern("flake.nix", ".git"),
+  autoArchive = true,
 }
 
 -- Typescript
@@ -129,7 +138,31 @@ require("lspconfig").ruff.setup {
   init_options = {
     settings = {
       logLevel = "debug",
-      inlayHints = false,
+      inlayHints = true,
+    },
+  },
+}
+
+require("lspconfig").basedpyright.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  on_init = nvlsp.on_init,
+  settings = {
+    basedpyright = {
+      -- python = {
+      -- pythonPath = utils.get_python_path(),
+      -- },
+      analysis = {
+        autoSearchPaths = true, -- LET THIS DO THE WORK
+        diagnosticMode = "openFilesOnly",
+        useLibraryCodeForTypes = true,
+        inlayHints = {
+          callArgumentNames = false,
+          genericTypes = false,
+          variableTypes = false,
+          functionReturnTypes = false,
+        },
+      },
     },
   },
 }
@@ -142,7 +175,7 @@ require("lspconfig").ruff.setup {
 --     python = {
 --       checkOnType = true,
 --       diagnostics = true,
---       inlayHints = false,
+--       inlayHints = true,
 --       smartCompletion = true,
 --     },
 --   },
