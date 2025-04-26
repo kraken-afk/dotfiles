@@ -31,6 +31,9 @@ return {
         "prisma-language-server",
         "glsl_analyzer",
         "astro-language-server",
+        "fsautocomplete",
+        "fatomas",
+        "oxlint",
       },
       PATH = "skip",
 

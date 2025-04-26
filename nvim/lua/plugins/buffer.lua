@@ -99,6 +99,7 @@ return {
         "glsl",
         "astro",
         "nix",
+        "fsharp",
       }
 
       return M

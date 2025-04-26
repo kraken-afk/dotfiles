@@ -2,13 +2,10 @@ local nvlsp = require "nvchad.configs.lspconfig"
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
-local utils = require "libs.utils"
 
-local lspconfig = require "lspconfig"
 local servers = {
+  "eslint",
   "tailwindcss",
-  "biome",
-  -- "eslint",
   "emmet_language_server",
   "cssls",
   "intelephense",
@@ -22,7 +19,7 @@ local servers = {
 }
 
 -- Emmet HTML
-lspconfig.emmet_language_server.setup {
+vim.lsp.config("emmet_language_server.setup", {
   filetypes = {
     "css",
     "eruby",
@@ -37,23 +34,25 @@ lspconfig.emmet_language_server.setup {
     "php",
     "astro",
   },
-}
+})
+vim.lsp.enable "emmet_language_server"
 
 -- Nix
-lspconfig.nil_ls.setup {
+vim.lsp.config("nil_ls", {
   cmd = { "nil" },
   filetypes = { "nix" },
   single_file_support = true,
-  root_dir = lspconfig.util.root_pattern("flake.nix", ".git"),
+  root_markers = { "flake.nix", ".git" },
   autoArchive = true,
-}
+})
+vim.lsp.enable "nil_ls"
 
 -- Typescript
-lspconfig.ts_ls.setup {
+vim.lsp.config("ts_ls", {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
+  root_markers = { "package.json", "tsconfig.json" },
   single_file_support = false,
   filetypes = {
     "astro",
@@ -64,29 +63,55 @@ lspconfig.ts_ls.setup {
     "typescriptreact",
     "typescript.tsx",
   },
-}
+})
 
--- Deno
-lspconfig.denols.setup {
+vim.lsp.enable "ts_ls"
+
+vim.lsp.config("eslint", {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern("deno.json", "import_map.json", "deno.jsonc"),
+  cmd = { "vscode-eslint-language-server", "--stdio" },
+  root_markers = {
+    ".eslintrc",
+    ".eslintrc.js",
+    ".eslintrc.cjs",
+    ".eslintrc.yaml",
+    ".eslintrc.yml",
+    ".eslintrc.json",
+    "eslint.config.js",
+    "eslint.config.mjs",
+    "eslint.config.cjs",
+    "eslint.config.ts",
+    "eslint.config.mts",
+    "eslint.config.cts",
+  },
+})
+vim.lsp.enable "eslint"
+
+-- Deno
+vim.lsp.config("denols", {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+  root_markers = { "deno.json", "import_map.json", "deno.jsonc" },
   single_file_support = false,
-}
+})
+-- vim.lsp.enable "denols"
 
 -- clang
-lspconfig.clangd.setup {
+vim.lsp.config("clangd", {
   on_attach = function(client, bufnr)
     client.server_capabilities.signatureHelpProvider = false
     on_attach(client, bufnr)
   end,
   capabilities = capabilities,
   on_init = nvlsp.on_init,
-}
+})
+vim.lsp.enable "clangd"
 
 -- jsonls
-lspconfig.jsonls.setup {
+vim.lsp.config("jsonls", {
   on_attach = on_attach,
   on_init = nvlsp.on_init,
   capabilities = capabilities,
@@ -97,16 +122,17 @@ lspconfig.jsonls.setup {
       validate = { enable = true },
     },
   },
-}
+})
+vim.lsp.enable "jsonls"
 
 -- gopls
-require("lspconfig").gopls.setup {
+vim.lsp.config("gopls", {
   on_attach = on_attach,
   on_init = nvlsp.on_init,
   capabilities = capabilities,
   cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
-  root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+  root_markers = { "go.work", "go.mod", ".git" },
   settings = {
     gopls = {
       completeUnimported = true,
@@ -121,17 +147,13 @@ require("lspconfig").gopls.setup {
         test = true,
         tidy = true,
       },
-      -- hints = {
-      --   assignVariableTypes = true,
-      --   constantValues = true,
-      --   rangeVariableTypes = true,
-      -- }
     },
   },
-}
+})
+vim.lsp.enable "gopls"
 
 -- Python
-require("lspconfig").ruff.setup {
+vim.lsp.config("ruff", {
   on_attach = on_attach,
   capabilities = capabilities,
   on_init = nvlsp.on_init,
@@ -141,17 +163,15 @@ require("lspconfig").ruff.setup {
       inlayHints = true,
     },
   },
-}
+})
+vim.lsp.enable "ruff"
 
-require("lspconfig").basedpyright.setup {
+vim.lsp.config("basedpyright", {
   on_attach = on_attach,
   capabilities = capabilities,
   on_init = nvlsp.on_init,
   settings = {
     basedpyright = {
-      -- python = {
-      -- pythonPath = utils.get_python_path(),
-      -- },
       analysis = {
         autoSearchPaths = true, -- LET THIS DO THE WORK
         diagnosticMode = "openFilesOnly",
@@ -165,9 +185,10 @@ require("lspconfig").basedpyright.setup {
       },
     },
   },
-}
+})
+vim.lsp.enable "basedpyright"
 
--- require("lspconfig").pylyzer.setup {
+-- vim.lsp.config("pylyzer", {
 --   on_attach = on_attach,
 --   capabilities = capabilities,
 --   on_init = nvlsp.on_init,
@@ -179,13 +200,21 @@ require("lspconfig").basedpyright.setup {
 --       smartCompletion = true,
 --     },
 --   },
--- }
+-- })
+-- vim.lsp.enable('pylyzer')
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+  vim.lsp.config(lsp, {
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
-  }
+  })
+  vim.lsp.enable(lsp)
 end
+
+vim.diagnostic.config {
+  signs = false,
+  underline = true,
+  virtual_lines = true,
+}

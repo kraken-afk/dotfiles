@@ -23,15 +23,15 @@ M.hl_override = {
   },
   DiagnosticWarn = {
     fg = "yellow",
-    bg = { "yellow", "black", 90 },
+    bg = { "yellow", "black", 91 },
   },
   DiagnosticError = {
     fg = "red",
-    bg = { "red", "black", 90 },
+    bg = { "red", "black", 91 },
   },
   DiagnosticHint = {
     fg = "purple",
-    bg = { "red", "black", 90 },
+    bg = { "purple", "black", 91 },
   },
 }
 

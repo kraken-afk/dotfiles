@@ -25,16 +25,30 @@ map("n", "<C-Up>", "<C-w>k", { desc = "Window up" })
 map("n", "<M-Up>", "<Plug>GoNSMUp", { desc = "Move current line up" })
 map("n", "<M-Down>", "<Plug>GoNSMDown", { desc = "Move current line down" })
 map("n", "vv", "viw", { desc = "Select current word" })
+map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
+
+map("n", "<S-k>", function()
+  vim.lsp.buf.hover {
+    border = "single",
+    max_width = math.floor(vim.o.columns * 0.6),
+    title_pos = "center",
+  }
+end, { desc = "LSP Hover" })
+
+map("n", "<leader>dc", function()
+  vim.diagnostic.open_float()
+end, { desc = "Open diagnostic in floating window" })
+
 map("n", "<leader>kx", function()
   require("nvchad.tabufline").closeAllBufs()
 end, { desc = "Close all buffers" })
 map("n", "a", "za", { desc = "Fold current buffer" })
--- map("n", "<RightMouse>", function()
---   vim.cmd.exec '"normal! \\<RightMouse>"'
---
---   local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
---   require("menu").open(options, { mouse = true })
--- end, {})
+map("n", "<RightMouse>", function()
+  vim.cmd.exec '"normal! \\<RightMouse>"'
+
+  local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
+  require("menu").open(options, { mouse = true })
+end, {})
 
 map("t", "<C-Left>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>h", true, true, true), { desc = "Window left" })
 map("t", "<C-Right>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>l", true, true, true), { desc = "Window right" })
