@@ -4,8 +4,8 @@ local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 local servers = {
-  "eslint",
   "tailwindcss",
+  "biome",
   "emmet_language_server",
   "cssls",
   "intelephense",
@@ -87,7 +87,7 @@ vim.lsp.config("eslint", {
     "eslint.config.cts",
   },
 })
-vim.lsp.enable "eslint"
+-- vim.lsp.enable "eslint"
 
 -- Deno
 vim.lsp.config("denols", {
@@ -201,7 +201,7 @@ vim.lsp.enable "basedpyright"
 --     },
 --   },
 -- })
--- vim.lsp.enable('pylyzer')
+-- vim.lsp.enable "pylyzer"
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
@@ -216,5 +216,5 @@ end
 vim.diagnostic.config {
   signs = false,
   underline = true,
-  virtual_lines = true,
+  -- virtual_lines = true,
 }

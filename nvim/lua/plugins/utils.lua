@@ -63,11 +63,6 @@ return {
     "wakatime/vim-wakatime",
     lazy = false,
   },
-  {
-    "alec-gibson/nvim-tetris",
-    enabled = true,
-    lazy = false,
-  },
   { "nvzone/showkeys", cmd = "ShowkeysToggle" },
   {
     "andweeb/presence.nvim",
@@ -95,5 +90,9 @@ return {
         },
       }
     end,
+  },
+  {
+    "dundalek/bloat.nvim",
+    cmd = "Bloat",
   },
 }
