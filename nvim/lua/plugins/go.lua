@@ -1,6 +1,7 @@
 return {
   "ray-x/go.nvim",
-  event = "VeryLazy",
+  lazy = true,
+  event = { "BufReadPost", "BufNewFile" },
   config = function()
     require("go").setup()
   end,

@@ -115,6 +115,8 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     ft = {
       "html",
       "javascript",
@@ -140,7 +142,8 @@ return {
   },
   {
     "folke/todo-comments.nvim",
-    lazy = false,
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
       -- your configuration comes here
@@ -150,6 +153,8 @@ return {
   },
   {
     "mg979/vim-visual-multi",
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     init = function()
       vim.g.VM_default_mappings = 0
       vim.g.VM_maps = {
@@ -172,15 +177,12 @@ return {
         ["Select h"] = "<M-C-Left>",
       }
     end,
-    lazy = false,
-  },
-  {
-    "lvimuser/lsp-inlayhints.nvim",
   },
 
   {
     "booperlv/nvim-gomove",
-    lazy = false,
+    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("gomove").setup {
         map_defaults = false,

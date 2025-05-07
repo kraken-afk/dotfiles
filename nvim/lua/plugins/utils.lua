@@ -61,12 +61,14 @@ return {
   },
   {
     "wakatime/vim-wakatime",
-    lazy = false,
+    lazy = true,
+    event = { "BufReadPre" },
   },
   { "nvzone/showkeys", cmd = "ShowkeysToggle" },
   {
     "andweeb/presence.nvim",
-    lazy = false,
+    lazy = true,
+    event = { "BufReadPre" },
     config = function()
       require("presence").setup {
         enable_line_number = true,
