@@ -6,8 +6,8 @@ local options = {
     astro = { "biome" },
     json = { "biome" },
     go = { "gofmt" },
-    css = { "prettier" },
-    html = { "prettier" },
+    css = { "biome" },
+    html = { "biome" },
     rust = { "cargo fmt" },
   },
 

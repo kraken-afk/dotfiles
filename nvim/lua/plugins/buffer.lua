@@ -1,5 +1,27 @@
 return {
   {
+    import = "nvchad.blink.lazyspec",
+  },
+  {
+
+    "saghen/blink.cmp",
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      cmdline = { enabled = false },
+      keymap = {
+        preset = "default",
+        ["<Tab>"] = { "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "fallback" },
+        ["<M-l>"] = {
+          function(cmp)
+            cmp.accept()
+          end,
+        },
+      },
+    },
+  },
+  {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy", -- Or `LspAttach`
     priority = 1000, -- needs to be loaded in first
