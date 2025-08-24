@@ -5,9 +5,28 @@ return {
   {
 
     "saghen/blink.cmp",
+    dependencies = { "fang2hou/blink-copilot" },
+    enabled = function()
+      return not vim.tbl_contains({
+        "NvimTree",
+        "Telescope",
+        "TelescopePrompt",
+      }, vim.bo.filetype) and vim.bo.buftype ~= "prompt" and vim.b.completion ~= false
+    end,
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+      sources = {
+        default = { "copilot" },
+        providers = {
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            score_offset = 100,
+            async = true,
+          },
+        },
+      },
       cmdline = { enabled = false },
       keymap = {
         preset = "default",
@@ -18,26 +37,13 @@ return {
             cmp.accept()
           end,
         },
+        ["<M-;>"] = {
+          function(cmp)
+            cmp.cancel()
+          end,
+        },
       },
     },
-  },
-  {
-    "rachartier/tiny-inline-diagnostic.nvim",
-    event = "VeryLazy", -- Or `LspAttach`
-    priority = 1000, -- needs to be loaded in first
-    enabled = false,
-    config = function()
-      require("tiny-inline-diagnostic").setup {
-        preset = "simple",
-        options = {},
-      }
-    end,
-  },
-  {
-    "chrisgrieser/nvim-lsp-endhints",
-    enabled = false,
-    event = "LspAttach",
-    opts = {}, -- required, even if empty
   },
   {
     "stevearc/conform.nvim",
@@ -59,31 +65,7 @@ return {
       require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
     end,
-    opts = {
-      inlay_hints = {
-        enabled = false,
-      },
-    },
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    dependencies = {
-      {
-        -- snippet plugin
-        "L3MON4D3/LuaSnip",
-        dependencies = "rafamadriz/friendly-snippets",
-        opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-        config = function(_, opts)
-          require("luasnip").config.set_config(opts)
-          require "nvchad.configs.luasnip"
-        end,
-      },
-    },
-    opts = function()
-      local M = require "configs.cmp"
-      return M
-    end,
+    opts = {},
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -122,6 +104,10 @@ return {
         "astro",
         "nix",
         "fsharp",
+        "dockerfile",
+        "cpp",
+        "commonlisp",
+        "scala",
       }
 
       return M
@@ -174,33 +160,72 @@ return {
     },
   },
   {
-    "mg979/vim-visual-multi",
+    "jake-stewart/multicursor.nvim",
     lazy = true,
     event = { "BufReadPost", "BufNewFile" },
-    init = function()
-      vim.g.VM_default_mappings = 0
-      vim.g.VM_maps = {
-        ["Find Under"] = "<C-d>",
-        ["Find Subword Under"] = "<C-d>",
-        ["Switch Mode"] = "<Tab>",
-        ["Find Next"] = "]",
-        ["Find Prev"] = "[",
-        ["Goto Next"] = "}",
-        ["Goto Prev"] = "{",
-        ["Seek Next"] = "<C-f>",
-        ["Seek Prev"] = "<C-b>",
-        ["Skip Region"] = "q",
-        ["Remove Region"] = "Q",
-        ["Invert Direction"] = "o",
-        ["Find Operator"] = "m",
-        ["Surround"] = "S",
-        ["Replace Pattern"] = "R",
-        ["Select l"] = "<M-C-Right>",
-        ["Select h"] = "<M-C-Left>",
-      }
+    branch = "1.0",
+    config = function()
+      local mc = require "multicursor-nvim"
+      mc.setup()
+
+      local set = vim.keymap.set
+
+      -- Add or skip adding a new cursor by matching word/selection
+      set({ "n", "x" }, "<leader>n", function()
+        mc.matchAddCursor(1)
+      end, { desc = "Add a new cursor to a match selection" })
+
+      set({ "n", "x" }, "<leader>s", function()
+        mc.matchSkipCursor(1)
+      end, { desc = "Skip and move to the next match" })
+
+      set({ "n", "x" }, "<leader>N", function()
+        mc.matchAddCursor(-1)
+      end, { desc = "Add a new cursor to a match going backward" })
+
+      set({ "n", "x" }, "<leader>S", function()
+        mc.matchSkipCursor(-1)
+      end, { desc = "Skip and move to the previous match" })
+
+      -- Add and remove cursors with control + left click.
+      set("n", "<c-leftmouse>", mc.handleMouse, { desc = "Add/remove cursor at mouse position" })
+      set("n", "<c-leftdrag>", mc.handleMouseDrag, { desc = "Add cursors while dragging mouse" })
+      set("n", "<c-leftrelease>", mc.handleMouseRelease, { desc = "Finish adding cursors with mouse" })
+
+      -- Disable and enable cursors.
+      set({ "n", "x" }, "<c-q>", mc.toggleCursor, { desc = "Toggle cursor at current position" })
+
+      -- Mappings defined in a keymap layer only apply when there are
+      -- multiple cursors. This lets you have overlapping mappings.
+      mc.addKeymapLayer(function(layerSet)
+        -- Select a different cursor as the main one.
+        layerSet({ "n", "x" }, "<left>", mc.prevCursor)
+        layerSet({ "n", "x" }, "<right>", mc.nextCursor)
+
+        -- Delete the main cursor.
+        layerSet({ "n", "x" }, "<leader>x", mc.deleteCursor)
+
+        -- Enable and clear cursors using escape.
+        layerSet("n", "<esc>", function()
+          if not mc.cursorsEnabled() then
+            mc.enableCursors()
+          else
+            mc.clearCursors()
+          end
+        end)
+      end)
+
+      -- Customize how cursors look.
+      local hl = vim.api.nvim_set_hl
+      hl(0, "MultiCursorCursor", { reverse = true })
+      hl(0, "MultiCursorVisual", { link = "Visual" })
+      hl(0, "MultiCursorSign", { link = "SignColumn" })
+      hl(0, "MultiCursorMatchPreview", { link = "Search" })
+      hl(0, "MultiCursorDisabledCursor", { reverse = true })
+      hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+      hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
     end,
   },
-
   {
     "booperlv/nvim-gomove",
     lazy = true,

@@ -22,6 +22,20 @@ return {
       "vendor",
       "dist",
       "target",
+      "lib64",
+      ".git",
+      ".venv",
+      "android",
+      "ios",
+      "build",
+      "coverage",
+      "bower_components",
+    },
+  },
+
+  pickers = {
+    find_files = {
+      hidden = true,
     },
   },
 

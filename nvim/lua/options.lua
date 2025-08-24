@@ -4,6 +4,7 @@ local opt = vim.opt
 local api = vim.api
 local wo = vim.wo
 local o = vim.o
+local filetype = vim.filetype
 
 -- Colors
 o.termguicolors = true
@@ -23,3 +24,27 @@ api.nvim_set_hl(0, "Comment", { italic = true })
 
 -- Relative number
 wo.relativenumber = true
+
+filetype.add {
+  filename = {
+    ["docker-compose.yml"] = "yaml.docker-compose",
+    ["docker-compose.yaml"] = "yaml.docker-compose",
+    ["compose.yml"] = "yaml.docker-compose",
+    ["compose.yaml"] = "yaml.docker-compose",
+  },
+}
+
+-- Copilot
+api.nvim_create_autocmd("User", {
+  pattern = "BlinkCmpMenuOpen",
+  callback = function()
+    vim.b.copilot_suggestion_hidden = true
+  end,
+})
+
+api.nvim_create_autocmd("User", {
+  pattern = "BlinkCmpMenuClose",
+  callback = function()
+    vim.b.copilot_suggestion_hidden = false
+  end,
+})

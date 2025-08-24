@@ -43,12 +43,6 @@ map("n", "<leader>kx", function()
   require("nvchad.tabufline").closeAllBufs()
 end, { desc = "Close all buffers" })
 map("n", "a", "za", { desc = "Fold current buffer" })
-map("n", "<RightMouse>", function()
-  vim.cmd.exec '"normal! \\<RightMouse>"'
-
-  local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
-  require("menu").open(options, { mouse = true })
-end, {})
 
 map("t", "<C-Left>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>h", true, true, true), { desc = "Window left" })
 map("t", "<C-Right>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>l", true, true, true), { desc = "Window right" })

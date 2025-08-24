@@ -4,7 +4,6 @@ local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 local servers = {
-  "tailwindcss",
   "biome",
   "emmet_language_server",
   "cssls",
@@ -16,6 +15,10 @@ local servers = {
   "prismals",
   "glsl_analyzer",
   "astro",
+  "pyrefly",
+  "dockerls",
+  "docker_compose_language_service",
+  "metals",
 }
 
 -- Emmet HTML
@@ -36,6 +39,39 @@ vim.lsp.config("emmet_language_server.setup", {
   },
 })
 vim.lsp.enable "emmet_language_server"
+
+-- Tailwind CSS
+vim.lsp.config("tailwindcss", {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  on_init = nvlsp.on_init,
+  filetypes = {
+    "html",
+    "css",
+    "scss",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "astro",
+    "vue",
+    "svelte",
+    "rust",
+  },
+  init_options = {
+    userLanguages = {
+      rust = "html",
+    },
+  },
+  settings = {
+    tailwindCSS = {
+      -- experimental = {
+      --   classRegex = { 'class: "(.*)"' },
+      -- },
+    },
+  },
+})
+vim.lsp.enable "tailwindcss"
 
 -- Nix
 vim.lsp.config("nil_ls", {
@@ -125,6 +161,21 @@ vim.lsp.config("jsonls", {
 })
 vim.lsp.enable "jsonls"
 
+-- vim.lsp.config("yamlls", {
+--   settings = {
+--     yaml = {
+--       schemas = vim.tbl_extend("force", require("schemastore").yaml.schemas(), {
+--         ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/master-standalone/all.json"] = {
+--           "**/*.k8s.yaml",
+--           "**/*.k8s.yml",
+--         },
+--       }),
+--       validate = { enable = true },
+--     },
+--   },
+-- })
+-- vim.lsp.enable "yamlls"
+
 -- gopls
 vim.lsp.config("gopls", {
   on_attach = on_attach,
@@ -160,48 +211,11 @@ vim.lsp.config("ruff", {
   init_options = {
     settings = {
       logLevel = "debug",
-      inlayHints = true,
+      inlayHints = false,
     },
   },
 })
 vim.lsp.enable "ruff"
-
-vim.lsp.config("basedpyright", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  on_init = nvlsp.on_init,
-  settings = {
-    basedpyright = {
-      analysis = {
-        autoSearchPaths = true, -- LET THIS DO THE WORK
-        diagnosticMode = "openFilesOnly",
-        useLibraryCodeForTypes = true,
-        inlayHints = {
-          callArgumentNames = false,
-          genericTypes = false,
-          variableTypes = false,
-          functionReturnTypes = false,
-        },
-      },
-    },
-  },
-})
-vim.lsp.enable "basedpyright"
-
--- vim.lsp.config("pylyzer", {
---   on_attach = on_attach,
---   capabilities = capabilities,
---   on_init = nvlsp.on_init,
---   settings = {
---     python = {
---       checkOnType = true,
---       diagnostics = true,
---       inlayHints = true,
---       smartCompletion = true,
---     },
---   },
--- })
--- vim.lsp.enable "pylyzer"
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
@@ -218,3 +232,5 @@ vim.diagnostic.config {
   underline = true,
   -- virtual_lines = true,
 }
+
+vim.lsp.inlay_hint.enable(false)
