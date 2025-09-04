@@ -5,7 +5,19 @@ return {
   {
 
     "saghen/blink.cmp",
-    dependencies = { "fang2hou/blink-copilot" },
+    dependencies = {
+      {
+        "supermaven-inc/supermaven-nvim",
+        opts = {
+          disable_inline_completion = true, -- disables inline completion for use with cmp
+          disable_keymaps = true, -- disables built in keymaps for more manual control
+          log_level = "off",
+        },
+      },
+      {
+        "huijiro/blink-cmp-supermaven",
+      },
+    },
     enabled = function()
       return not vim.tbl_contains({
         "NvimTree",
@@ -16,13 +28,19 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+      completion = {
+        menu = { auto_show = false },
+        ghost_text = {
+          show_with_menu = false,
+          enabled = true,
+        },
+      }, -- end completion
       sources = {
-        default = { "copilot" },
+        default = { "lsp", "path", "supermaven", "snippets", "buffer" },
         providers = {
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            score_offset = 100,
+          supermaven = {
+            name = "supermaven",
+            module = "blink-cmp-supermaven",
             async = true,
           },
         },

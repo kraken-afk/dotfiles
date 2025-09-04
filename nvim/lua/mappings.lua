@@ -39,6 +39,10 @@ map("n", "<leader>dc", function()
   vim.diagnostic.open_float()
 end, { desc = "Open diagnostic in floating window" })
 
+map("n", "<leader>rm", function()
+  require("render-markdown").toggle()
+end, { desc = "Render markdown" })
+
 map("n", "<leader>kx", function()
   require("nvchad.tabufline").closeAllBufs()
 end, { desc = "Close all buffers" })

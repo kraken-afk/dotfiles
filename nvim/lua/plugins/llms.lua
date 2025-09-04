@@ -42,7 +42,7 @@ return {
   },
   {
     "zbirenbaum/copilot.lua",
-    -- enabled = false,
+    enabled = false,
     cmd = "Copilot",
     lazy = true,
     event = "InsertEnter",
@@ -55,4 +55,19 @@ return {
       },
     },
   },
+  -- {
+  --   "supermaven-inc/supermaven-nvim",
+  --   lazy = true,
+  --   event = "InsertEnter",
+  --   opts = {
+  --     keymaps = {
+  --       accept_suggestion = "<M-l>",
+  --       clear_suggestion = "<M-;>",
+  --       accept_word = "<M-j>",
+  --     },
+  --   },
+  --   -- config = function()
+  --   --   require("supermaven-nvim").setup {}
+  --   -- end,
+  -- },
 }
