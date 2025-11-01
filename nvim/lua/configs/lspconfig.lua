@@ -217,6 +217,28 @@ vim.lsp.config("ruff", {
 })
 vim.lsp.enable "ruff"
 
+-- Kotlin
+vim.lsp.config("kotlin_language_server", {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+  cmd = { "kotlin-language-server" },
+  filetypes = { "kotlin" },
+  root_markers = { "settings.gradle", "settings.gradle.kts", "build.gradle", "build.gradle.kts" },
+})
+vim.lsp.enable "kotlin_language_server"
+
+-- Detekt (Kotlin linter)
+vim.lsp.config("detekt", {
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+  cmd = { "detekt-language-server", "--stdio" },
+  filetypes = { "kotlin" },
+  root_markers = { "detekt.yml", ".detekt.yml", "build.gradle", "build.gradle.kts" },
+})
+vim.lsp.enable "detekt"
+
 -- lsps with default config
 for _, lsp in ipairs(servers) do
   vim.lsp.config(lsp, {

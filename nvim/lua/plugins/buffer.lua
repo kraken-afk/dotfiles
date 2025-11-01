@@ -29,9 +29,9 @@ return {
     ---@type blink.cmp.Config
     opts = {
       completion = {
-        menu = { auto_show = false },
+        menu = { auto_show = true },
         ghost_text = {
-          show_with_menu = false,
+          show_with_menu = true,
           enabled = true,
         },
       }, -- end completion
@@ -126,6 +126,7 @@ return {
         "cpp",
         "commonlisp",
         "scala",
+        "kotlin",
       }
 
       return M

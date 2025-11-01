@@ -12,6 +12,7 @@ local options = {
     html = { "biome" },
     rust = { "dx_fmt" },
     scala = { "scalafmt --stdin" },
+    -- kotlin = { "ktfmt" },
   },
   format_on_save = {
     timeout_ms = 300,

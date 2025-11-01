@@ -1,7 +1,7 @@
 require "nvchad.mappings"
 
 local map = vim.keymap.set
-
+local Difft = require "difft"
 map("i", "<M-Left>", "<Home>", { desc = "Beginning of line" })
 map("i", "<M-Right>", "<End>", { desc = "End of line" })
 
@@ -47,6 +47,19 @@ map("n", "<leader>kx", function()
   require("nvchad.tabufline").closeAllBufs()
 end, { desc = "Close all buffers" })
 map("n", "a", "za", { desc = "Fold current buffer" })
+
+map("n", "<leader>df", function()
+  if Difft.is_visible() then
+    Difft.hide()
+  else
+    Difft.diff()
+  end
+end, { desc = "Git Differ" })
+
+map("n", "<leader>z", function()
+  vim.cmd "Zen"
+  vim.cmd "Focus"
+end, { desc = "Focus window" })
 
 map("t", "<C-Left>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>h", true, true, true), { desc = "Window left" })
 map("t", "<C-Right>", vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>l", true, true, true), { desc = "Window right" })

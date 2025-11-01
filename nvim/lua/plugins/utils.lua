@@ -37,6 +37,9 @@ return {
         "pyrefly",
         "docker-compose-language-service",
         "dockerfile-language-server",
+        "kotlin-language-server",
+        "detekt",
+        "ktfmt",
       },
       PATH = "skip",
 
@@ -108,5 +111,53 @@ return {
       date_format = "%m-%d-%Y %H:%M:%S", -- template for the date, check Date format section for more options
       virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
     },
+  },
+  {
+    "cdmill/focus.nvim",
+    cmd = { "Focus", "Zen", "Narrow" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
+  {
+    "ahkohd/difft.nvim",
+    config = function()
+      require("difft").setup {
+        command = "GIT_EXTERNAL_DIFF='difft --color=always' git diff",
+        no_diff_message = "All clean! No changes detected.",
+        layout = "ivy_taller",
+        window = {
+          number = false,
+          height = 1,
+        },
+        header = {
+          content = function(filename, step, language)
+            local devicons = require "nvim-web-devicons"
+            local basename = vim.fn.fnamemodify(filename, ":t")
+            local icon, hl = devicons.get_icon(basename)
+
+            local result = {}
+            table.insert(result, { "   " })
+            table.insert(result, { icon and (" " .. icon .. " ") or "", hl })
+            table.insert(result, { filename })
+
+            if step then
+              table.insert(result, { " • " })
+              table.insert(result, { tostring(step.current) })
+              table.insert(result, { "/" })
+              table.insert(result, { tostring(step.of) })
+            end
+
+            return result
+          end,
+          highlight = {
+            link = "FloatTitle",
+            full_width = true,
+          },
+        },
+      }
+    end,
   },
 }

@@ -35,7 +35,7 @@ M.hl_override = {
   },
 }
 
-M.transparency = true
+-- M.transparency = true
 M.theme = "tokyonight"
 
 M.telescope = { style = "bordered" }
