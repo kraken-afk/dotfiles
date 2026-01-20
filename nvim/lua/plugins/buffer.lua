@@ -6,17 +6,17 @@ return {
 
     "saghen/blink.cmp",
     dependencies = {
-      {
-        "supermaven-inc/supermaven-nvim",
-        opts = {
-          disable_inline_completion = true, -- disables inline completion for use with cmp
-          disable_keymaps = true, -- disables built in keymaps for more manual control
-          log_level = "off",
-        },
-      },
-      {
-        "huijiro/blink-cmp-supermaven",
-      },
+      -- {
+      --   "supermaven-inc/supermaven-nvim",
+      --   opts = {
+      --     disable_inline_completion = true, -- disables inline completion for use with cmp
+      --     disable_keymaps = true, -- disables built in keymaps for more manual control
+      --     log_level = "off",
+      --   },
+      -- },
+      -- {
+      --   "huijiro/blink-cmp-supermaven",
+      -- },
     },
     enabled = function()
       return not vim.tbl_contains({
@@ -36,13 +36,13 @@ return {
         },
       }, -- end completion
       sources = {
-        default = { "lsp", "path", "supermaven", "snippets", "buffer" },
+        default = { "lsp", "path", "snippets", "buffer" },
         providers = {
-          supermaven = {
-            name = "supermaven",
-            module = "blink-cmp-supermaven",
-            async = true,
-          },
+          -- supermaven = {
+          --   name = "supermaven",
+          --   module = "blink-cmp-supermaven",
+          --   async = true,
+          -- },
         },
       },
       cmdline = { enabled = false },

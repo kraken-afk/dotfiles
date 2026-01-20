@@ -12,6 +12,10 @@ map("v", "<M-l>", "<End>", { desc = "End of line" })
 map("v", "<M-Up>", "<Plug>GoVSMUp", { desc = "Move current block up" })
 map("v", "<M-Down>", "<Plug>GoVSMDown", { desc = "Move current block down" })
 
+map("v", "<C-a>", function()
+  require("opencode").ask("@this: ", { submit = true })
+end, { desc = "Ask OpenCode" })
+
 map("n", "<M-Left>", "<Home>", { desc = "Beginning of line" })
 map("n", "<M-Right>", "<End>", { desc = "End of line" })
 map("n", "<M-h>", "<Home>", { desc = "Beginning of line" })
@@ -26,6 +30,14 @@ map("n", "<M-Up>", "<Plug>GoNSMUp", { desc = "Move current line up" })
 map("n", "<M-Down>", "<Plug>GoNSMDown", { desc = "Move current line down" })
 map("n", "vv", "viw", { desc = "Select current word" })
 map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
+
+map("n", "<leader>op", function()
+  require("opencode").toggle()
+end, { desc = "Toggle OpenCode" })
+
+map("n", "<leader>po", function()
+  require("opencode").ask(nil, { submit = true })
+end, { desc = "Prompt to OpenCode" })
 
 map("n", "<S-k>", function()
   vim.lsp.buf.hover {
@@ -71,10 +83,10 @@ map({ "n", "t" }, "<A-i>", function()
     pos = "float",
     id = "floatTerm",
     float_opts = {
-      row = 0.1,
-      col = 0.15,
-      width = 0.7,
-      height = 0.7,
+      row = 0.04,
+      col = (1 - 0.9) / 2,
+      width = 0.9,
+      height = 0.85,
     },
   }
 end, { desc = "terminal toggle floating term" })
