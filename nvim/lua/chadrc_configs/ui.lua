@@ -4,7 +4,8 @@ local M = {}
 M.tabufline = {
   enabled = true,
   lazyload = true,
-  order = { "buffers", "tabs" },
+  treeOffsetFt = "NvimTree",
+  order = { "buffers", "tabs", "treeOffset" },
   modules = nil,
 }
 

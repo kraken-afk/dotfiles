@@ -5,19 +5,7 @@ return {
   {
 
     "saghen/blink.cmp",
-    dependencies = {
-      -- {
-      --   "supermaven-inc/supermaven-nvim",
-      --   opts = {
-      --     disable_inline_completion = true, -- disables inline completion for use with cmp
-      --     disable_keymaps = true, -- disables built in keymaps for more manual control
-      --     log_level = "off",
-      --   },
-      -- },
-      -- {
-      --   "huijiro/blink-cmp-supermaven",
-      -- },
-    },
+    dependencies = {},
     enabled = function()
       return not vim.tbl_contains({
         "NvimTree",
@@ -37,13 +25,7 @@ return {
       }, -- end completion
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
-        providers = {
-          -- supermaven = {
-          --   name = "supermaven",
-          --   module = "blink-cmp-supermaven",
-          --   async = true,
-          -- },
-        },
+        providers = {},
       },
       cmdline = { enabled = false },
       keymap = {
@@ -83,35 +65,34 @@ return {
       require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
     end,
-    opts = {},
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     event = { "BufReadPost", "BufNewFile" },
-    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
+    cmd = { "TSInstall", "TSUpdate" },
     build = ":TSUpdate",
-    opts = function()
-      local M = require "nvchad.configs.treesitter"
-      M.ensure_installed = {
-        "lua",
-        "vim",
-        "vimdoc",
+    config = function()
+      dofile(vim.g.base46_cache .. "syntax")
+      dofile(vim.g.base46_cache .. "treesitter")
+      local ts = require "nvim-treesitter"
+      local installed = ts.get_installed()
+      local want = {
         "tsx",
         "javascript",
         "typescript",
         "html",
         "css",
+        "scss",
         "rust",
+        "cpp",
         "c",
         "json",
-        "jsonc",
-        "cmake",
         "toml",
         "yaml",
+        "cmake",
         "php",
-        "markdown",
         "dart",
-        "scss",
         "haskell",
         "go",
         "gomod",
@@ -123,18 +104,22 @@ return {
         "nix",
         "fsharp",
         "dockerfile",
-        "cpp",
         "commonlisp",
         "scala",
         "kotlin",
+        "lua",
+        "solidity",
+        "java",
+        "sql",
+        "bash",
+        "vim",
       }
-
-      return M
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "syntax")
-      dofile(vim.g.base46_cache .. "treesitter")
-      require("nvim-treesitter.configs").setup(opts)
+      local missing = vim.tbl_filter(function(l)
+        return not vim.tbl_contains(installed, l)
+      end, want)
+      if #missing > 0 then
+        ts.install(missing)
+      end
     end,
   },
   {
@@ -265,23 +250,6 @@ return {
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "nvimtree")
       require("nvim-tree").setup(opts)
-    end,
-  },
-  {
-    "numToStr/Comment.nvim",
-    dependencies = "JoosepAlviste/nvim-ts-context-commentstring",
-    keys = {
-      { "gcc", mode = "n", desc = "Comment toggle current line" },
-      { "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
-      { "gc", mode = "x", desc = "Comment toggle linewise (visual)" },
-      { "gbc", mode = "n", desc = "Comment toggle current block" },
-      { "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
-      { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
-    },
-    config = function()
-      require("Comment").setup {
-        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-      }
     end,
   },
 }

@@ -1,6 +1,6 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "lua-language-server",
@@ -40,6 +40,9 @@ return {
         "kotlin-language-server",
         "detekt",
         "ktfmt",
+        "nil",
+        "nixfmt",
+        "ty",
       },
       PATH = "skip",
 
@@ -85,11 +88,6 @@ return {
         buttons = false,
       }
     end,
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
   },
   {
     "dundalek/bloat.nvim",

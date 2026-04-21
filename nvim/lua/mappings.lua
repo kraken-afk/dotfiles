@@ -12,10 +12,6 @@ map("v", "<M-l>", "<End>", { desc = "End of line" })
 map("v", "<M-Up>", "<Plug>GoVSMUp", { desc = "Move current block up" })
 map("v", "<M-Down>", "<Plug>GoVSMDown", { desc = "Move current block down" })
 
-map("v", "<C-a>", function()
-  require("opencode").ask("@this: ", { submit = true })
-end, { desc = "Ask OpenCode" })
-
 map("n", "<M-Left>", "<Home>", { desc = "Beginning of line" })
 map("n", "<M-Right>", "<End>", { desc = "End of line" })
 map("n", "<M-h>", "<Home>", { desc = "Beginning of line" })
@@ -30,14 +26,9 @@ map("n", "<M-Up>", "<Plug>GoNSMUp", { desc = "Move current line up" })
 map("n", "<M-Down>", "<Plug>GoNSMDown", { desc = "Move current line down" })
 map("n", "vv", "viw", { desc = "Select current word" })
 map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
-
-map("n", "<leader>op", function()
-  require("opencode").toggle()
-end, { desc = "Toggle OpenCode" })
-
-map("n", "<leader>po", function()
-  require("opencode").ask(nil, { submit = true })
-end, { desc = "Prompt to OpenCode" })
+map("n", "<leader>lw", function()
+  vim.wo.wrap = not vim.wo.wrap
+end, { desc = "Toggle line wrap" })
 
 map("n", "<S-k>", function()
   vim.lsp.buf.hover {
@@ -58,7 +49,7 @@ end, { desc = "Render markdown" })
 map("n", "<leader>kx", function()
   require("nvchad.tabufline").closeAllBufs()
 end, { desc = "Close all buffers" })
-map("n", "a", "za", { desc = "Fold current buffer" })
+map("n", "f", "za", { desc = "Fold current buffer" })
 
 map("n", "<leader>df", function()
   if Difft.is_visible() then

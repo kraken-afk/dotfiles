@@ -1,28 +1,37 @@
 local nvlsp = require "nvchad.configs.lspconfig"
-local on_attach = require("nvchad.configs.lspconfig").on_attach
-local on_init = require("nvchad.configs.lspconfig").on_init
-local capabilities = require("nvchad.configs.lspconfig").capabilities
 
+-- Set global defaults for all servers (Neovim 0.11+)
+vim.lsp.config("*", {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+})
+
+-- Servers that need no extra configuration beyond the global defaults
 local servers = {
   "biome",
   "emmet_language_server",
   "cssls",
   "intelephense",
-  "taplo",
   "lua_ls",
   "dartls",
   "somesass_ls",
   "prismals",
   "glsl_analyzer",
   "astro",
-  "pyrefly",
+  -- "pyrefly",
   "dockerls",
   "docker_compose_language_service",
   "metals",
+  "ty",
 }
 
--- Emmet HTML
-vim.lsp.config("emmet_language_server.setup", {
+for _, lsp in ipairs(servers) do
+  vim.lsp.enable(lsp)
+end
+
+-- Emmet — custom filetypes
+vim.lsp.config("emmet_language_server", {
   filetypes = {
     "css",
     "eruby",
@@ -38,13 +47,9 @@ vim.lsp.config("emmet_language_server.setup", {
     "astro",
   },
 })
-vim.lsp.enable "emmet_language_server"
 
--- Tailwind CSS
+-- Tailwind CSS — extended filetypes + Rust userLanguages
 vim.lsp.config("tailwindcss", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  on_init = nvlsp.on_init,
   filetypes = {
     "html",
     "css",
@@ -59,16 +64,7 @@ vim.lsp.config("tailwindcss", {
     "rust",
   },
   init_options = {
-    userLanguages = {
-      rust = "html",
-    },
-  },
-  settings = {
-    tailwindCSS = {
-      -- experimental = {
-      --   classRegex = { 'class: "(.*)"' },
-      -- },
-    },
+    userLanguages = { rust = "html" },
   },
 })
 vim.lsp.enable "tailwindcss"
@@ -83,11 +79,8 @@ vim.lsp.config("nil_ls", {
 })
 vim.lsp.enable "nil_ls"
 
--- Typescript
+-- TypeScript — no single-file mode, explicit root markers
 vim.lsp.config("ts_ls", {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
   root_markers = { "package.json", "tsconfig.json" },
   single_file_support = false,
   filetypes = {
@@ -100,13 +93,10 @@ vim.lsp.config("ts_ls", {
     "typescript.tsx",
   },
 })
-
 vim.lsp.enable "ts_ls"
 
+-- ESLint (disabled by default — enable when needed)
 vim.lsp.config("eslint", {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
   cmd = { "vscode-eslint-language-server", "--stdio" },
   root_markers = {
     ".eslintrc",
@@ -125,32 +115,24 @@ vim.lsp.config("eslint", {
 })
 -- vim.lsp.enable "eslint"
 
--- Deno
+-- Deno (disabled by default — conflicts with ts_ls)
 vim.lsp.config("denols", {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
   root_markers = { "deno.json", "import_map.json", "deno.jsonc" },
   single_file_support = false,
 })
 -- vim.lsp.enable "denols"
 
--- clang
+-- clangd — disable duplicate signatureHelp provider
 vim.lsp.config("clangd", {
   on_attach = function(client, bufnr)
     client.server_capabilities.signatureHelpProvider = false
-    on_attach(client, bufnr)
+    nvlsp.on_attach(client, bufnr)
   end,
-  capabilities = capabilities,
-  on_init = nvlsp.on_init,
 })
 vim.lsp.enable "clangd"
 
--- jsonls
+-- JSON with SchemaStore
 vim.lsp.config("jsonls", {
-  on_attach = on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = capabilities,
   filetypes = { "json", "jsonc" },
   settings = {
     json = {
@@ -161,6 +143,7 @@ vim.lsp.config("jsonls", {
 })
 vim.lsp.enable "jsonls"
 
+-- YAML with SchemaStore (disabled by default)
 -- vim.lsp.config("yamlls", {
 --   settings = {
 --     yaml = {
@@ -176,11 +159,8 @@ vim.lsp.enable "jsonls"
 -- })
 -- vim.lsp.enable "yamlls"
 
--- gopls
+-- Go
 vim.lsp.config("gopls", {
-  on_attach = on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = capabilities,
   cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
   root_markers = { "go.work", "go.mod", ".git" },
@@ -205,9 +185,6 @@ vim.lsp.enable "gopls"
 
 -- Python
 vim.lsp.config("ruff", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  on_init = nvlsp.on_init,
   init_options = {
     settings = {
       logLevel = "debug",
@@ -217,11 +194,10 @@ vim.lsp.config("ruff", {
 })
 vim.lsp.enable "ruff"
 
+vim.lsp.enable "pyrefly"
+
 -- Kotlin
 vim.lsp.config("kotlin_language_server", {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
   cmd = { "kotlin-language-server" },
   filetypes = { "kotlin" },
   root_markers = { "settings.gradle", "settings.gradle.kts", "build.gradle", "build.gradle.kts" },
@@ -230,24 +206,25 @@ vim.lsp.enable "kotlin_language_server"
 
 -- Detekt (Kotlin linter)
 vim.lsp.config("detekt", {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
   cmd = { "detekt-language-server", "--stdio" },
   filetypes = { "kotlin" },
   root_markers = { "detekt.yml", ".detekt.yml", "build.gradle", "build.gradle.kts" },
 })
 vim.lsp.enable "detekt"
 
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  vim.lsp.config(lsp, {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  })
-  vim.lsp.enable(lsp)
-end
+-- Taplo (TOML) with SchemaStore catalog
+vim.lsp.config("taplo", {
+  settings = {
+    evenBetterToml = {
+      schema = {
+        enabled = true,
+        catalogs = { "https://www.schemastore.org/api/json/catalog.json" },
+        associations = {},
+      },
+    },
+  },
+})
+vim.lsp.enable "taplo"
 
 vim.diagnostic.config {
   signs = false,

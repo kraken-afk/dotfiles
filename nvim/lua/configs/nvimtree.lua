@@ -17,7 +17,7 @@ local options = {
     side = "right",
     width = 33,
     preserve_window_proportions = true,
-    signcolumn = "no"
+    signcolumn = "no",
   },
   git = {
     enable = false,

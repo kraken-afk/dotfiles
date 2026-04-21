@@ -13,10 +13,11 @@ local options = {
     rust = { "dx_fmt" },
     scala = { "scalafmt --stdin" },
     -- kotlin = { "ktfmt" },
+    nix = { "nixfmt" },
   },
   format_on_save = {
     timeout_ms = 300,
-    lsp_fallback = true,
+    lsp_format = "fallback",
   },
   formatters = {
     dx_fmt = {

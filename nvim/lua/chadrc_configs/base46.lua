@@ -35,8 +35,8 @@ M.hl_override = {
   },
 }
 
--- M.transparency = true
-M.theme = "kanagawa"
+M.transparency = true
+M.theme = "catppuccin"
 
 M.telescope = { style = "bordered" }
 
